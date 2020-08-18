@@ -6,6 +6,7 @@ import key
 class BinanceBot:
     
     def __init__(self, s='empty'):
+        self.show_data='Error'
         self.data='Error'
         self.symbol=s
 
@@ -43,5 +44,6 @@ class BinanceBot:
 
         
             final_dateframe['Close_time']=dataframe_final_date
+            self.data=candles_data_frame
             self.data=final_dateframe
 
