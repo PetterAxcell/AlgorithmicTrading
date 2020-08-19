@@ -33,4 +33,3 @@ def command_ayuda(m): # Definimos una función que resuleva lo que necesitemos.
     
 
 bot.polling()
-

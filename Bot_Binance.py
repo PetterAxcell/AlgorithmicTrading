@@ -48,6 +48,7 @@ class BinanceBot:
             self.data=final_dateframe
             print(self.data)
 
+
 s="BTCUSDT"
 X = BinanceBot(s)
 X.GetData()
