@@ -47,3 +47,5 @@ class BinanceBot:
             self.data=candles_data_frame
             self.data=final_dateframe
 
+
+
