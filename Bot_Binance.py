@@ -44,6 +44,10 @@ class BinanceBot:
 
         
             final_dateframe['Close_time']=dataframe_final_date
-            self.data=candles_data_frame
+            self.show_data=candles_data_frame
             self.data=final_dateframe
+            print(self.data)
 
+s="BTCUSDT"
+X = BinanceBot(s)
+X.GetData()
