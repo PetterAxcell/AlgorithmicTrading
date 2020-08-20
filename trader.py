@@ -9,21 +9,21 @@ cerebro = bt.Cerebro()
  #Add a strategy
 cerebro.addstrategy(TestStrategy)
 
-#Set our desired cash start
-cerebro.broker.set_cash(1000)
-
-
 # Create a Data Feed
 data = bt.feeds.YahooFinanceCSVData(
-    dataname='data.csv',
+    dataname='BTCUSDT.csv',
     # Do not pass values before this date
-    fromdate=datetime.datetime(2020, 1, 1),
+    fromdate=datetime.datetime(2020, 8, 1),
     # Do not pass values after this date
     todate=datetime.datetime(2020, 12, 31),
-    reverse=False)
+    adjclose = False,
+    reverse = False)
 
 #Add Data Feed to Cerebro
 cerebro.adddata(data)
+
+#Set our desired cash start
+cerebro.broker.set_cash(1000.0)
 
 #Set the comission
 cerebro.broker.setcommission(commission=0.01)
