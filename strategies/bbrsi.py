@@ -1,6 +1,6 @@
 import backtrader as bt
 
-# Create a Stratey
+""" Create a Stratey
 class TestStrategy(bt.Strategy):
 
     def log(self, txt, dt=None):
@@ -86,4 +86,4 @@ class TestStrategy(bt.Strategy):
                 self.log('SELL CREATE, %.2f' % self.dataclose[0])
 
                 # Keep track of the created order to avoid a 2nd order
-                self.order = self.sell()
+                self.order = self.sell()"""

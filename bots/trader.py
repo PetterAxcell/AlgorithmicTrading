@@ -1,6 +1,6 @@
 import backtrader as bt
 import datetime
-from strategies import TestStrategy 
+#from strategies.bbrsi import TestStrategy 
 
 
 #Create a cerebro entity
@@ -16,7 +16,6 @@ data = bt.feeds.YahooFinanceCSVData(
     fromdate=datetime.datetime(2020, 8, 1),
     # Do not pass values after this date
     todate=datetime.datetime(2020, 12, 31),
-    adjclose = False,
     reverse = False)
 
 #Add Data Feed to Cerebro
