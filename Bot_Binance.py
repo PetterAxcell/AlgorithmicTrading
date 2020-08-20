@@ -17,7 +17,7 @@ class BinanceBot:
 
         else:
             client = Client(api_key=key.api_key, api_secret=key.api_secret)
-            candles = client.get_klines(symbol=self.symbol, interval = Client.KLINE_INTERVAL_1HOUR, limit=20)
+            candles = client.get_klines(symbol=self.symbol, interval = Client.KLINE_INTERVAL_15MINUTE, limit=672)
             candles_data_frame = df(candles)
             candles_data_frame_date = candles_data_frame[0]
             final_date = []
@@ -32,9 +32,9 @@ class BinanceBot:
             candles_data_frame.pop(11)
             dataframe_final_date = df(final_date)
 
-            final_dateframe=dataframe_final_date.join(candles_data_frame)
+            final_dataframe=dataframe_final_date.join(candles_data_frame)
 
-            final_dateframe.columns=('Date','Open', 'High', 'Low', 'Close', 'Volume', 'Close_time', 'Asset_volume', 'Trade_number', 'Taker_buy_base', 'Taker_buy_quote')
+            final_dataframe.columns=('Date','Open', 'High', 'Low', 'Close', 'Volume', 'Close_time', 'Asset_volume', 'Trade_number', 'Taker_buy_base', 'Taker_buy_quote')
 
             candles_data_frame_date = candles_data_frame[6]
             for time in candles_data_frame_date.unique(): 
@@ -43,11 +43,12 @@ class BinanceBot:
             dataframe_final_date = df(final_date)
 
         
-            final_dateframe['Close_time']=dataframe_final_date
+            final_dataframe['Close_time']=dataframe_final_date
             self.show_data=candles_data_frame
-            self.data=final_dateframe
-            print(self.data)
+            self.data=final_dataframe
 
+            #Copy data to a .csv file
+            final_dataframe.to_csv(path_or_buf="data.csv", index=False)
 
 s="BTCUSDT"
 X = BinanceBot(s)
