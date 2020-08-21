@@ -15,9 +15,9 @@ cerebro.broker.set_cash(1000)
 
 # Create a Data Feed
 data = bt.feeds.YahooFinanceCSVData(
-    dataname='data.csv',
+    dataname='BTCUSDT.csv',
     # Do not pass values before this date
-    fromdate=datetime.datetime(2020, 1, 1),
+    fromdate=datetime.datetime(2020, 8, 1),
     # Do not pass values after this date
     todate=datetime.datetime(2020, 12, 31),
     reverse=False)
