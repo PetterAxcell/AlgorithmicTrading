@@ -1,13 +1,13 @@
 import backtrader as bt
 import datetime
-from strategies import TestStrategy 
+from bbrsi import MyStrategy 
 
 
 #Create a cerebro entity
 cerebro = bt.Cerebro()
 
  #Add a strategy
-cerebro.addstrategy(TestStrategy)
+cerebro.addstrategy(MyStrategy)
 
 #Set our desired cash start
 cerebro.broker.set_cash(1000)
@@ -17,7 +17,7 @@ cerebro.broker.set_cash(1000)
 data = bt.feeds.YahooFinanceCSVData(
     dataname='BTCUSDT.csv',
     # Do not pass values before this date
-    fromdate=datetime.datetime(2020, 8, 1),
+    fromdate=datetime.datetime(2020, 8, 20),
     # Do not pass values after this date
     todate=datetime.datetime(2020, 12, 31),
     reverse=False)
