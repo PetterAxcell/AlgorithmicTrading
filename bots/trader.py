@@ -7,7 +7,7 @@ import datetime
 cerebro = bt.Cerebro()
 
  #Add a strategy
-cerebro.addstrategy(TestStrategy)
+#cerebro.addstrategy(TestStrategy)
 
 # Create a Data Feed
 data = bt.feeds.YahooFinanceCSVData(

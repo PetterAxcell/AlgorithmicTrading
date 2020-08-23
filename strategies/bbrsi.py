@@ -1,89 +1,56 @@
-import backtrader as bt
+import matplotlib.pyplot as plt
+import datetime as dt
+import pandas as pd
 
-""" Create a Stratey
-class TestStrategy(bt.Strategy):
+def RSI(data, period = 14):
+    # Get Data
+    df=pd.read_csv(data, usecols=['Date','Close'])
+    chg = df['Close'].diff(1)
+    gain = chg.mask(chg < 0,0)
+    loss = chg.mask( chg > 0,0)
+    avg_gain = gain.ewm(com=period-1,min_periods=period).mean()
+    avg_loss = loss.ewm(com=period-1,min_periods=period).mean()
+    df['Rsi'] = 100 - (100/(1+abs(avg_gain/avg_loss)))
+    return df[['Date', 'Rsi']]
 
-    def log(self, txt, dt=None):
-        ''' Logging function fot this strategy'''
-        dt = dt or self.datas[0].datetime.date(0)
-        print('%s, %s' % (dt.isoformat(), txt))
+def BB(data):
+    # def bollinger_bands(serie, windows=20, stds=2,pd): 
+    df=pd.read_csv(data, usecols= ['Date','Close'])
+    # Calculating 30 days moving average
+    df['30_MA_Close'] = df['Close'].rolling(window=30).mean()
+    # Calculating 20 days rolling standard devtaion
+    df['20_std_Close'] = df['Close'].rolling(window=20).std()
+    # Upper Bollinger Bands = Mean+2*SD
+    df['Upper'] = df['30_MA_Close'] + 2*df['20_std_Close']
+    # Lower Bollinger Bands = Mean-2*SD
+    df['Lower'] = df['30_MA_Close'] - 2*df['20_std_Close']
+    return df[['Date', 'Upper','30_MA_Close','Lower']]
 
-    def __init__(self):
-        # Keep a reference to the "close" line in the data[0] dataseries
-        self.dataclose = self.datas[0].close
+def buy_order(money, data):
+    #active = true
+    return 0
+    
+def sell_order(money, data):
+    #active = false
+    return 0
 
-        # To keep track of pending orders and buy price/commission
-        self.order = None
-        self.buyprice = None
-        self.buycomm = None
+if __name__ == '__main__':
+    money = 10000
+    active = False
+    data = 'dataframes/BTCUSDT.csv'
+    df = pd.merge(BB(data),RSI(data),on = 'Date')
+    print(df)
 
-    def notify_order(self, order):
-        if order.status in [order.Submitted, order.Accepted]:
-            # Buy/Sell order submitted/accepted to/by broker - Nothing to do
-            return
+    # Buy condition
+    '''The buy condition should act if df['Rsi'] >= 30 and it last position was below 30'''
+    if ((df['Rsi'] < 30) & (df['Lower'] < df ['Close']) & active == False):
+        buy_order(money, df['Close']) 
+        active = True
 
-        # Check if an order has been completed
-        # Attention: broker could reject order if not enough cash
-        if order.status in [order.Completed]:
-            if order.isbuy():
-                self.log(
-                    'BUY EXECUTED, Price: %.2f, Cost: %.2f, Comm %.2f' %
-                    (order.executed.price,
-                     order.executed.value,
-                     order.executed.comm))
+    # Sell condition
+    '''The condition should act when actual_price reaches df['30_MA_Close'], however i am going to test when 
+        close_price reaches this position'''
+    if(df['Close'] == df['30_MA_Close'] & active == True): 
+        sell_order(money,df['Close'])
+        active = False
 
-                self.buyprice = order.executed.price
-                self.buycomm = order.executed.comm
-            else:  # Sell
-                self.log('SELL EXECUTED, Price: %.2f, Cost: %.2f, Comm %.2f' %
-                         (order.executed.price,
-                          order.executed.value,
-                          order.executed.comm))
-
-            self.bar_executed = len(self)
-
-        elif order.status in [order.Canceled, order.Margin, order.Rejected]:
-            self.log('Order Canceled/Margin/Rejected')
-
-        self.order = None
-
-    def notify_trade(self, trade):
-        if not trade.isclosed:
-            return
-
-        self.log('OPERATION PROFIT, GROSS %.2f, NET %.2f' %
-                 (trade.pnl, trade.pnlcomm))
-
-    def next(self):
-        # Simply log the closing price of the series from the reference
-        self.log('Close, %.2f' % self.dataclose[0])
-
-        # Check if an order is pending ... if yes, we cannot send a 2nd one
-        if self.order:
-            return
-
-        # Check if we are in the market
-        if not self.position:
-
-            # Not yet ... we MIGHT BUY if ...
-            if self.dataclose[0] < self.dataclose[-1]:
-                    # current close less than previous close
-
-                    if self.dataclose[-1] < self.dataclose[-2]:
-                        # previous close less than the previous close
-
-                        # BUY, BUY, BUY!!! (with default parameters)
-                        self.log('BUY CREATE, %.2f' % self.dataclose[0])
-
-                        # Keep track of the created order to avoid a 2nd order
-                        self.order = self.buy()
-
-        else:
-
-            # Already in the market ... we might sell
-            if len(self) >= (self.bar_executed + 5):
-                # SELL, SELL, SELL!!! (with all possible default parameters)
-                self.log('SELL CREATE, %.2f' % self.dataclose[0])
-
-                # Keep track of the created order to avoid a 2nd order
-                self.order = self.sell()"""
