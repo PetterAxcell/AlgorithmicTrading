@@ -51,7 +51,7 @@ class BinanceBot:
             self.data=final_dataframe
 
             #Copy data to a .csv file
-            final_dataframe.to_csv(path_or_buf="dataframes/BTCUSDT.csv", index=False)
+            final_dataframe.to_csv(path_or_buf="BTCUSDT.csv", index=False)
 
 s="BTCUSDT"
 X = BinanceBot(s)
