@@ -17,16 +17,17 @@ def BBRSI():
     money = 100000
     active = False
     data = 'BTCUSDT.csv'
-    
-    df2 = pd.read_csv(data)
-    df = pd.merge(BB(data),RSI(data), on = 'Date')
-    df['Close']= df2.loc[:,['Close']]
 
-    df = df[30:-6] #Start at 30 because BB period = 30
-    
-    # for index,row in df.iterrows():
-    #     if row['Rsi']<30 & row['Lower'] < row ['Close']:
-    #         print(row['Rsi'])
+    df = pd.read_csv(data)
+    df = pd.merge(df,BB(data), on = 'Date')
+    df = pd.merge(df,RSI(data), on = 'Date')
+
+
+    df=df[30:]
+
+    for index,row in df.iterrows():
+        if row['Rsi']<30 and (row['Lower'] > row ['Close']):
+            print(row['Date'])
 
 
     # for index, row in df.iterrows():
@@ -42,7 +43,6 @@ def BBRSI():
     if(df['Close'] == df['30_MA_Close'] & active == True): 
         sell_order(money,df['Close'])
         active = False'''
-    print(df)
-
+   
 
 BBRSI() 
