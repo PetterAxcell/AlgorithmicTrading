@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 def buy_order(money, data):
-    #a = 0
+    print("Perfect")
     return 0
 
 def sell_order(money, data):
@@ -27,7 +27,7 @@ def BBRSI():
 
     for index,row in df.iterrows():
         if row['Rsi']<30 and (row['Lower'] > row ['Close']):
-            print(row['Date'])
+            buy_order(money, data)
 
 
     # for index, row in df.iterrows():
