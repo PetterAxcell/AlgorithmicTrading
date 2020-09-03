@@ -1,42 +1,59 @@
-import itertools
-import datetime
 import backtrader as bt
+import datetime
+#from bbrsi import *
+from TestStrategy import TestStrategy 
+#from MyStrategy import MyStrategy 
 
-class MyCSVData(bt.CSVDataBase):
-
-    def start(self):
-        # Nothing to do for this data feed type
-        pass
-
-    def stop(self):
-        # Nothing to do for this data feed type
-        pass
-
-    def _loadline(self, linetokens):
-        i = itertools.count(0)
-
-        dttxt = linetokens[next(i)]
-        # Format is YYYY-MM-DD
-        y = int(dttxt[0:4])
-        m = int(dttxt[5:7])
-        d = int(dttxt[8:10])
-        h = int(dttxt[11:13])
-        mn = int(dttxt[14:16])
-        s = int(dttxt[17:19])
-        
-        dt = datetime.datetime(y, m, d, h, mn, s)
-        dtnum = date2num(dt)
-
-        self.lines.datetime[0] = dtnum
-        self.lines.open[0] = float(linetokens[next(i)])
-        self.lines.high[0] = float(linetokens[next(i)])
-        self.lines.low[0] = float(linetokens[next(i)])
-        self.lines.close[0] = float(linetokens[next(i)])
-        self.lines.volume[0] = float(linetokens[next(i)])
-        self.lines.openinterest[0] = float(linetokens[next(i)])
-
-        return True
-
+#Create a cerebro entity
 cerebro = bt.Cerebro()
 
-print(cerebro)
+ #Add a my strategy
+#cerebro.addstrategy(MyStrategy)
+
+# Add TestStrategy
+cerebro.addstrategy(TestStrategy)
+
+#Set our desired cash start
+cerebro.broker.set_cash(1000)
+
+data = bt.feeds.GenericCSVData(
+    dataname='BTCUSDT.csv',
+
+    fromdate=datetime.datetime(2000, 1, 1),
+    todate=datetime.datetime(2000, 12, 31),
+
+    nullvalue=0.0,
+
+    dtformat=('%Y-%m-%d'),
+    tmformat=('%H:%M:%S'),
+
+    datetime=0,
+    time=1,
+    high=3,
+    low=4,
+    open=2,
+    close=5,
+    volume=6,
+)
+
+#Add Data Feed to Cerebro
+cerebro.adddata(data)
+
+#Set our desired cash start
+cerebro.broker.set_cash(1000.0)
+
+#Set the comission
+cerebro.broker.setcommission(commission=0.01)
+
+# Print out the starting conditions
+print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
+
+# Run over everything
+cerebro.run()
+
+# Print out the final result
+print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
+
+#Plot the result
+#cerebro.plot()
+
