@@ -19,21 +19,22 @@ cerebro.broker.set_cash(1000)
 data = bt.feeds.GenericCSVData(
     dataname='BTCUSDT.csv',
 
-    fromdate=datetime.datetime(2000, 1, 1),
-    todate=datetime.datetime(2000, 12, 31),
+    fromdate=datetime.datetime(2019, 1, 1),
+    todate=datetime.datetime(2020, 12, 31),
 
     nullvalue=0.0,
 
     dtformat=('%Y-%m-%d'),
     tmformat=('%H:%M:%S'),
 
-    datetime=0,
-    time=1,
-    high=3,
-    low=4,
-    open=2,
-    close=5,
-    volume=6,
+    date=0,
+    time=6,
+    high=2,
+    low=3,
+    open=1,
+    close=4,
+    volume=5,
+    openinterest=-1,
 )
 
 #Add Data Feed to Cerebro

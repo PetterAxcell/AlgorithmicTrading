@@ -1,6 +1,6 @@
 import backtrader as bt
 import datetime
-from bbrsi import *
+#from bbrsi import *
 from TestStrategy import TestStrategy 
 #from MyStrategy import MyStrategy 
 
@@ -20,7 +20,7 @@ cerebro.broker.set_cash(1000)
 
 # Create a Data Feed
 data = bt.feeds.YahooFinanceCSVData(
-    dataname='BTCUSDT.csv',
+    dataname='ETHUSD.csv',
     # Do not pass values before this date
     #fromdate=datetime.datetime(2020, 8, 1),
     fromdate=datetime.datetime(2020, 1, 20),
