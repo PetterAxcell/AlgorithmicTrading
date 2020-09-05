@@ -1,17 +1,17 @@
 import backtrader as bt
 import datetime
 #from bbrsi import *
-from TestStrategy import TestStrategy 
-#from MyStrategy import MyStrategy 
+#from TestStrategy import TestStrategy 
+from MyStrategy import MyStrategy 
 
 #Create a cerebro entity
 cerebro = bt.Cerebro()
 
  #Add a my strategy
-#cerebro.addstrategy(MyStrategy)
+cerebro.addstrategy(MyStrategy)
 
 # Add TestStrategy
-cerebro.addstrategy(TestStrategy)
+#cerebro.addstrategy(TestStrategy)
 
 #Set our desired cash start
 cerebro.broker.set_cash(1000)
