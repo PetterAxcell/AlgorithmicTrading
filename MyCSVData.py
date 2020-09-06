@@ -1,13 +1,16 @@
 from __future__ import (absolute_import, division, print_function,unicode_literals)
 #from backtrader_plotting import Bokeh
 import datetime
-from bb import *
+from plot import *
 from MyStrategy import * 
+
+from TestStrategy import*
+
 #Create a cerebro entity
 cerebro = bt.Cerebro()
 
  #Add a my strategy
-cerebro.addstrategy(MyStrategy)
+cerebro.addstrategy(TestStrategy)
 
 # Add TestStrategy
 #cerebro.addstrategy(TestStrategy)

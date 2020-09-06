@@ -21,7 +21,7 @@ class BinanceBot:
 
         else:
             client = Client(api_key=key.api_key, api_secret=key.api_secret)
-            candles = client.get_historical_klines(symbol=self.symbol, interval = Client.KLINE_INTERVAL_15MINUTE, start_str="3 Sep, 2020")
+            candles = client.get_historical_klines(symbol=self.symbol, interval = Client.KLINE_INTERVAL_15MINUTE, start_str="3 Aug, 2020")
             candles_data_frame = df(candles)
             candles_data_frame_date = candles_data_frame[0]
             final_date = []
