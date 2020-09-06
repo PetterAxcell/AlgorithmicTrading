@@ -2,6 +2,15 @@
 Petter Axcell Peñafiel Macías
 Adrián Morente Ribera
 
+Importante 
+pip3 install matplotlib==3.2.1
+talib (2 cosas que descargar)
+numpy
+backtrader
+pandas
+
+
+
 0. Ideas
 --> Strategy ¿Only 1?¿More?¿Who knows? (Call to indicators *if they √ go in* functions/Buy/Sell/TP/SL...)
 --> Data from diferent markets
