@@ -1,3 +1,7 @@
+from __future__ import (absolute_import, division, print_function,unicode_literals)
+#from backtrader_plotting import Bokeh
+import datetime
+from plot import *
 import backtrader as bt
 import datetime
 #from bbrsi import *
@@ -47,4 +51,5 @@ cerebro.run()
 print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
 
 #Plot the result
-#cerebro.plot()
+
+cerebro.plot(style='candlestick',grid='true', barup='#4db6ac', bardown='#1976d2',)

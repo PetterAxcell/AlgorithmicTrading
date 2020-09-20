@@ -14,9 +14,9 @@ cerebro.addstrategy(MyStrategy)
 
 # Add TestStrategy
 #cerebro.addstrategy(TestStrategy)
-
+cerebro.broker.set_cash(100000.0)
 #Set our desired cash start
-cerebro.broker.set_cash(1000)
+
 cerebro.broker.setcommission(commission=0.001)
 
 data = bt.feeds.GenericCSVData(
@@ -43,11 +43,6 @@ data = bt.feeds.GenericCSVData(
 #Add Data Feed to Cerebro
 cerebro.adddata(data)
 
-#Set our desired cash start
-cerebro.broker.set_cash(1000.0)
-
-#Set the comission
-cerebro.broker.setcommission(commission=0.001)
 
 # Print out the starting conditions
 print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
